@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "Catálogo de productos",
+    "description": "Ejecuta Crear primero y cambia la variable idProducto por el id recibido. Después sigue con las demás peticiones en orden.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "idProducto", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "1. Crear producto",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Cuaderno rayado\",\n  \"price\": 39.50,\n  \"stock\": 20,\n  \"description\": \"Cuaderno de 100 hojas\",\n  \"brand\": \"Escolar\",\n  \"img\": \"\"\n}" },
+        "url": "{{baseUrl}}/api/v1/products/create"
+      }
+    },
+    {
+      "name": "2. Consultar todos los activos",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/products/getAll?active=true" }
+    },
+    {
+      "name": "3. Consultar el producto creado",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/products/getById/{{idProducto}}" }
+    },
+    {
+      "name": "4. Actualizar todos los datos",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Cuaderno cuadriculado\",\n  \"price\": 44.00,\n  \"stock\": 15,\n  \"description\": \"Cuaderno de 100 hojas cuadriculadas\",\n  \"brand\": \"Escolar\",\n  \"img\": \"\"\n}" },
+        "url": "{{baseUrl}}/api/v1/products/update/{{idProducto}}"
+      }
+    },
+    {
+      "name": "5. Cambiar solamente el precio",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"price\": 42.75\n}" },
+        "url": "{{baseUrl}}/api/v1/products/change-price/{{idProducto}}"
+      }
+    },
+    {
+      "name": "6. Dar de baja el producto",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/products/delete/{{idProducto}}" }
+    },
+    {
+      "name": "7. Comprobar que ya no sale en la lista",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/products/getAll?active=true" }
+    },
+    {
+      "name": "8. Comprobar que ya no se encuentra por id",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/products/getById/{{idProducto}}" }
+    },
+    {
+      "name": "9. Id inexistente",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/products/getById/99999999" }
+    },
+    {
+      "name": "10. Precio inválido",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Lápiz\",\n  \"price\": -3,\n  \"stock\": 5,\n  \"description\": \"Lápiz de grafito\",\n  \"brand\": \"Escolar\",\n  \"img\": \"\"\n}" },
+        "url": "{{baseUrl}}/api/v1/products/create"
+      }
+    }
+  ]
+}
